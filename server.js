@@ -18,10 +18,11 @@ app.use(cors({
     maxAge: 86400
 }));
 
-app.use('/auth', authRoutes);
 app.use(express.json());
 app.use(validarContentType);
 app.use(logger);
+
+app.use('/auth', authRoutes);
 
 app.use('/tarefas', autenticar, tarefasRoutes);
 app.use('/usuarios', autenticar, usuariosRoutes);

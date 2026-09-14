@@ -1,39 +1,32 @@
-let tarefas = [
-    { id: 1, texto: 'Estudar Node', coluna: 'afazer', prioridade: 'alta' },
-    { id: 2, texto: 'Criar rotas Express', coluna: 'concluido', prioridade: 'alta' },
-    { id: 3, texto: 'Testar no Postman', coluna: 'concluido', prioridade: 'alta' }
+let usuarios = [
+    { id: 1, nome: 'Bruno', email: 'brn@gmail.com', senha: '123456' },
+    { id: 2, nome: 'Fernanda', email: 'frnd@email.com', senha: '123456' },
+    { id: 3, nome: 'Lucas', email: 'luq@email.com', senha: '123456' },
 ];
-let proximoId = 4;
+
+let proximoIdUsuario = 4;
 
 module.exports = {
-    listar: () => tarefas,
-    listarPorColuna: (coluna) => tarefas.filter(t => t.coluna === coluna),
-    buscar: (id) => tarefas.find(t => t.id === id),
+    listar: () => usuarios,
+    buscar: (id) => usuarios.find(u => u.id === id),
+    buscarPorEmail: (email) => usuarios.find(u => u.email === email),
 
-    adicionar: ({ texto, coluna, prioridade, usuarioId }) => {
-
-        const novaTarefa = {
-            id: proximoId++,
-            texto,
-            coluna: coluna || 'afazer',
-            prioridade: prioridade || 'alta',
-            usuarioId: usuarioId || null
-        };
-        
-        tarefas.push(novaTarefa);
-        return novaTarefa;
+    adicionar: ({ nome, email, senha }) => {
+        const novo = { id: proximoIdUsuario++, nome, email, senha };
+        usuarios.push(novo);
+        return novo;
     },
-
+    
     atualizar: (id, dados) => {
-        const idx = tarefas.findIndex(t => t.id === id);
+        const idx = usuarios.findIndex(u => u.id === id);
         if (idx === -1) return null;
-        tarefas[idx] = { ...tarefas[idx], ...dados, id };
-        return tarefas[idx];
+        usuarios[idx] = { ...usuarios[idx], ...dados, id };
+        return usuarios[idx];
     },
 
     remover: (id) => {
-        const idx = tarefas.findIndex(t => t.id === id);
+        const idx = usuarios.findIndex(u => u.id === id);
         if (idx === -1) return null;
-        return tarefas.splice(idx, 1)[0];
+        return usuarios.splice(idx, 1)[0];
     }
 };
