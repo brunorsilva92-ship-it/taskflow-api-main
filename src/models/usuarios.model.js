@@ -1,0 +1,33 @@
+let usuarios = [
+    { id: 1, nome: 'Bruno', email: 'brn@email.com', senha: '123456' },
+    { id: 2, nome: 'Fernanda', email: 'frnd@email.com', senha: '123456' },
+    { id: 3, nome: 'Admin', email: 'admin@email.com', senha: '123456' },
+
+];
+
+let proximoIdUsuario = 4;
+
+module.exports = {
+    listar: () => usuarios,
+    buscar: (id) => usuarios.find(u => u.id === id),
+    buscarPorEmail: (email) => usuarios.find(u => u.email === email),
+
+    adicionar: ({ nome, email, senha }) => {
+        const novo = { id: proximoIdUsuario++, nome, email, senha };
+        usuarios.push(novo);
+        return novo;
+    },
+    
+    atualizar: (id, dados) => {
+        const idx = usuarios.findIndex(u => u.id === id);
+        if (idx === -1) return null;
+        usuarios[idx] = { ...usuarios[idx], ...dados, id };
+        return usuarios[idx];
+    },
+
+    remover: (id) => {
+        const idx = usuarios.findIndex(u => u.id === id);
+        if (idx === -1) return null;
+        return usuarios.splice(idx, 1)[0];
+    }
+};
